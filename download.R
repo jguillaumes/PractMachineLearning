@@ -1,0 +1,2 @@
+download.file(url = "https://d396qusza40orc.cloudfront.net/predmachlearn/pml-training.csv", destfile = "data/pml-training.csv",method = "curl")
+download.file(url = "https://d396qusza40orc.cloudfront.net/predmachlearn/pml-testing.csv", destfile = "data/pml-testing.csv",method = "curl")
