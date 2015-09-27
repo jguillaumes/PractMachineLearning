@@ -106,8 +106,11 @@ Naive Bayesian | `r max(modNaive$results$Accuracy)`
 Perhaps unsurprisely the method which gives better accuracy is **Random Forests**:
 
 ```{r printmodel}
+ourAccuracy <- modRForest$results$Accuracy[1]
 modRForest
 ```
+
+According to these numbers, we can expect about `r format(ourAccuracy*100,digits=4)`% of correct predictions. That means in our test dataset (`r dim(ctesting)[1]` observations) we can expect about `r floor(dim(ctesting)[1]*ourAccuracy)` correct predictions.
 
 ## Model validation
 
@@ -119,11 +122,11 @@ preds      <- predict(modRForest, newdata=preTesting)
 confusionMatrix(data = preds, reference = outtest)
 ```
 
-As can be seen, we have a good accuracy with our test dataset, so we can conclude this model is good enough to predict the outcomes for the *real* test data.
+As can be seen, we have a good accuracy with our test dataset, so we can conclude this model is good enough to predict the outcomes for the *real* test data. Actually, we are getting better results than the ones we exepcted, according to our previous estimation.
 
 # Application to the problem test data
 
-We just need to generate the predicted outcomes for the problem test data to finish the assignement.
+We just need to generate the predicted outcomes for the problem test data to finish the assignement. The number of expected good predictions is `r floor(dim(fullptest)[1]*ourAccuracy)`.
 
 ```{r applying,cache=TRUE}
 fullptest <- read.csv("data/pml-testing.csv")

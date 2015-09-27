@@ -213,7 +213,8 @@ modNaive    &lt;- train(outtrain ~ .,data=preTraining, method=&quot;nb&quot;)   
 </tbody>
 </table>
 <p>Perhaps unsurprisely the method which gives better accuracy is <strong>Random Forests</strong>:</p>
-<pre class="r"><code>modRForest</code></pre>
+<pre class="r"><code>ourAccuracy &lt;- modRForest$results$Accuracy[1]
+modRForest</code></pre>
 <pre><code>## Random Forest 
 ## 
 ## 11776 samples
@@ -232,6 +233,7 @@ modNaive    &lt;- train(outtrain ~ .,data=preTraining, method=&quot;nb&quot;)   
 ## 
 ## Accuracy was used to select the optimal model using  the largest value.
 ## The final value used for the model was mtry = 2.</code></pre>
+<p>According to these numbers, we can expect about 89.72% of correct predictions. That means in our test dataset (7846 observations) we can expect about 7039 correct predictions.</p>
 </div>
 <div id="model-validation" class="section level2">
 <h2>Model validation</h2>
@@ -243,39 +245,39 @@ confusionMatrix(data = preds, reference = outtest)</code></pre>
 ## 
 ##           Reference
 ## Prediction    A    B    C    D    E
-##          A 2191   34   15    5    4
+##          A 2191   34   13    5    4
 ##          B    6 1438   20   12    8
-##          C   17   35 1318   23   17
+##          C   17   35 1320   23   17
 ##          D   17    9   10 1239    7
 ##          E    1    2    5    7 1406
 ## 
 ## Overall Statistics
 ##                                           
-##                Accuracy : 0.9676          
-##                  95% CI : (0.9635, 0.9714)
+##                Accuracy : 0.9679          
+##                  95% CI : (0.9637, 0.9717)
 ##     No Information Rate : 0.2845          
 ##     P-Value [Acc &gt; NIR] : &lt; 2.2e-16       
 ##                                           
-##                   Kappa : 0.959           
-##  Mcnemar's Test P-Value : 6.592e-07       
+##                   Kappa : 0.9594          
+##  Mcnemar's Test P-Value : 5.552e-07       
 ## 
 ## Statistics by Class:
 ## 
 ##                      Class: A Class: B Class: C Class: D Class: E
-## Sensitivity            0.9816   0.9473   0.9635   0.9635   0.9750
-## Specificity            0.9897   0.9927   0.9858   0.9934   0.9977
-## Pos Pred Value         0.9742   0.9690   0.9348   0.9665   0.9894
-## Neg Pred Value         0.9927   0.9874   0.9922   0.9928   0.9944
+## Sensitivity            0.9816   0.9473   0.9649   0.9635   0.9750
+## Specificity            0.9900   0.9927   0.9858   0.9934   0.9977
+## Pos Pred Value         0.9751   0.9690   0.9348   0.9665   0.9894
+## Neg Pred Value         0.9927   0.9874   0.9925   0.9928   0.9944
 ## Prevalence             0.2845   0.1935   0.1744   0.1639   0.1838
-## Detection Rate         0.2793   0.1833   0.1680   0.1579   0.1792
-## Detection Prevalence   0.2866   0.1891   0.1797   0.1634   0.1811
-## Balanced Accuracy      0.9856   0.9700   0.9746   0.9784   0.9863</code></pre>
-<p>As can be seen, we have a good accuracy with our test dataset, so we can conclude this model is good enough to predict the outcomes for the <em>real</em> test data.</p>
+## Detection Rate         0.2793   0.1833   0.1682   0.1579   0.1792
+## Detection Prevalence   0.2864   0.1891   0.1800   0.1634   0.1811
+## Balanced Accuracy      0.9858   0.9700   0.9754   0.9784   0.9863</code></pre>
+<p>As can be seen, we have a good accuracy with our test dataset, so we can conclude this model is good enough to predict the outcomes for the <em>real</em> test data. Actually, we are getting better results than the ones we exepcted, according to our previous estimation.</p>
 </div>
 </div>
 <div id="application-to-the-problem-test-data" class="section level1">
 <h1>Application to the problem test data</h1>
-<p>We just need to generate the predicted outcomes for the problem test data to finish the assignement.</p>
+<p>We just need to generate the predicted outcomes for the problem test data to finish the assignement. The number of expected good predictions is 17.</p>
 <pre class="r"><code>fullptest &lt;- read.csv(&quot;data/pml-testing.csv&quot;)
 cptest &lt;- cleanData(fullptest)
 preCptest &lt;- predict(preProc, newdata=cptest)
